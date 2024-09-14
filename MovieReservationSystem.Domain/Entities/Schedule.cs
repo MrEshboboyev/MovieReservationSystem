@@ -6,7 +6,7 @@
         public DateTime ShowTime { get; set; }
         public Guid MovieId { get; set; }
         public Movie Movie { get; set; }
-        public int TheaterId { get; set; }
+        public Guid TheaterId { get; set; }
         public Theater Theater { get; set; }
 
         // relations

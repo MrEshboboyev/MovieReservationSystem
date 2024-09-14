@@ -8,6 +8,14 @@ namespace MovieReservationSystem.Infrastructure.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+        public DbSet<Actor> Actors { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<MovieActor> MovieActors { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Seat> Seats { get; set; }
+        public DbSet<Theater> Theaters { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
