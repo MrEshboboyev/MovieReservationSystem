@@ -10,6 +10,6 @@
         ITheaterRepository Theater { get; }
         ITicketRepository Ticket { get; }
 
-        void Save();
+        Task Save();
     }
 }
