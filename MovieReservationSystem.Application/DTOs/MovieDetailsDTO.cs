@@ -1,0 +1,14 @@
+﻿namespace MovieReservationSystem.Application.DTOs
+{
+    public class MovieDetailsDTO
+    {
+        public Guid MovieId { get; set; }
+        public string Title { get; set; }
+        public string Genre { get; set; }
+        public TimeSpan Duration { get; set; }
+
+        // relations
+        public ICollection<ActorDTO> Actors { get; set; }
+        public ICollection<MovieScheduleDTO> Schedules { get; set; }
+    }
+}
