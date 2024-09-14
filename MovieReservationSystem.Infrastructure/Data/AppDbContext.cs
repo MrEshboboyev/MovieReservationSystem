@@ -11,6 +11,56 @@ namespace MovieReservationSystem.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            // Many-to-Many between Movie and Actor
+            builder.Entity<MovieActor>()
+                .HasKey(ma => new { ma.MovieId, ma.ActorId });
+
+            builder.Entity<MovieActor>()
+                .HasOne(ma => ma.Movie)
+                .WithMany(m => m.MovieActors)
+                .HasForeignKey(ma => ma.MovieId);
+
+            builder.Entity<MovieActor>()
+                .HasOne(ma => ma.Actor)
+                .WithMany(a => a.MovieActors)
+                .HasForeignKey(ma => ma.ActorId);
+
+            // One-to-Many between Theater and Seat
+            builder.Entity<Seat>()
+                .HasOne(s => s.Theater)
+                .WithMany(t => t.Seats)
+                .HasForeignKey(s => s.TheaterId);
+
+            // One-to-Many between Theater and Schedule
+            builder.Entity<Schedule>()
+                .HasOne(s => s.Theater)
+                .WithMany(t => t.Schedules)
+                .HasForeignKey(s => s.TheaterId);
+
+            // One-to-Many between Movie and Schedule
+            builder.Entity<Schedule>()
+                .HasOne(s => s.Movie)
+                .WithMany(t => t.Schedules)
+                .HasForeignKey(s => s.MovieId);
+
+            // One-to-Many between Schedule and Ticket
+            builder.Entity<Ticket>()
+                .HasOne(s => s.Schedule)
+                .WithMany(t => t.Tickets)
+                .HasForeignKey(s => s.ScheduleId);
+
+            // One-to-Many between Seat and Ticket
+            builder.Entity<Ticket>()
+                .HasOne(s => s.Seat)
+                .WithMany(t => t.Tickets)
+                .HasForeignKey(s => s.SeatId);
+
+            // One-to-Many between ApplicationUser and Ticket
+            builder.Entity<Ticket>()
+                .HasOne(s => s.User)
+                .WithMany(t => t.Tickets)
+                .HasForeignKey(s => s.UserId);
         }
     }
 }
