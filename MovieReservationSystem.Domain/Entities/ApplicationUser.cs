@@ -7,5 +7,8 @@ namespace MovieReservationSystem.Domain.Entities
     {
         [Required]
         public string FullName { get; set; }
+
+        // relations
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }
