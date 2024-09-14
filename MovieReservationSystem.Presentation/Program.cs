@@ -15,6 +15,9 @@ builder.Services.AddDatabaseConfiguration(builder.Configuration);
 // configure identity
 builder.Services.AddIdentityConfiguration();
 
+// configure JWT Authentication 
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
 // configure lifetime for services
 builder.Services.AddApplicationServices();
 
