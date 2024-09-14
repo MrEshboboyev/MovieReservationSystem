@@ -5,13 +5,13 @@ namespace MovieReservationSystem.Infrastructure.Repositories
 {
     public class UnitOfWork(AppDbContext db) : IUnitOfWork
     {
-        public IActorRepository Actor { get; } = new ActorRepository(db);
-        public IMovieActorRepository MovieActor { get; } = new MovieActorRepository(db);
-        public IMovieRepository Movie { get; } = new MovieRepository(db);
-        public IScheduleRepository Schedule { get; } = new ScheduleRepository(db);
-        public ISeatRepository Seat { get; } = new SeatRepository(db);
-        public ITheaterRepository Theater { get; } = new TheaterRepository(db);
-        public ITicketRepository Ticket { get; } = new TicketRepository(db);
+        public IActorRepository Actor { get; private set; } = new ActorRepository(db);
+        public IMovieActorRepository MovieActor { get; private set; } = new MovieActorRepository(db);
+        public IMovieRepository Movie { get; private set; } = new MovieRepository(db);
+        public IScheduleRepository Schedule { get; private set; } = new ScheduleRepository(db);
+        public ISeatRepository Seat { get; private set; } = new SeatRepository(db);
+        public ITheaterRepository Theater { get; private set; } = new TheaterRepository(db);
+        public ITicketRepository Ticket { get; private set; } = new TicketRepository(db);
 
         private readonly AppDbContext _db = db;
 
