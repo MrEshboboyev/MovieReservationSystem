@@ -1,3 +1,4 @@
+using MovieReservationSystem.Application.Mappings;
 using MovieReservationSystem.Infrastructure.Configurations;
 using MovieReservationSystem.Infrastructure.Services;
 
@@ -20,6 +21,9 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 // configure lifetime for services
 builder.Services.AddApplicationServices();
+
+// configure AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
