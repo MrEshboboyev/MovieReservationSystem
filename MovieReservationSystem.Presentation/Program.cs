@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerConfiguration();
 
 // configure database
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
@@ -16,7 +16,7 @@ builder.Services.AddDatabaseConfiguration(builder.Configuration);
 builder.Services.AddIdentityConfiguration();
 
 // configure lifetime for services
-builder.Services.AddServices();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 

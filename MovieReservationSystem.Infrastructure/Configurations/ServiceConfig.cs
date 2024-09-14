@@ -6,7 +6,7 @@ namespace MovieReservationSystem.Infrastructure.Configurations
 {
     public static class ServiceConfig
     {
-        public static IServiceCollection AddServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             // adding lifetime
             services.AddScoped<IDbInitializer, DbInitializer>();

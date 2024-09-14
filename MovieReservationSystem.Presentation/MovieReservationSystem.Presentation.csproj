@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\MovieReservationSystem.Application\MovieReservationSystem.Application.csproj" />
+    <ProjectReference Include="..\MovieReservationSystem.Infrastructure\MovieReservationSystem.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MovieReservationSystem.Application\MovieReservationSystem.Application.csproj" />
-    <ProjectReference Include="..\MovieReservationSystem.Infrastructure\MovieReservationSystem.Infrastructure.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
