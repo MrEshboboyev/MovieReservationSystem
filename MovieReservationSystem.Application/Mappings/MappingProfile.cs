@@ -30,6 +30,17 @@ namespace MovieReservationSystem.Application.Mappings
             // UpdateMovieDTO -> Movie
             CreateMap<UpdateMovieDTO, Movie>();
 
+            // CreateMovieScheduleDTO -> Schedule
+            CreateMap<CreateMovieScheduleDTO, Schedule>();
+
+            // Schedule -> ScheduleDetailsDTO
+            CreateMap<Schedule, ScheduleDetailsDTO>()
+                .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Movie.Title))
+                .ForMember(dest => dest.TheaterName, opt => opt.MapFrom(src => src.Theater.Name));
+
+            // Seat -> SeatDTO
+            CreateMap<Seat, SeatDTO>();
+
             // CreateScheduleDTO -> Schedule
             CreateMap<CreateScheduleDTO, Schedule>();
         }
