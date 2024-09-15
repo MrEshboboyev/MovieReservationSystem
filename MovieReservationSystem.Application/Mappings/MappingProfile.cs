@@ -64,8 +64,14 @@ namespace MovieReservationSystem.Application.Mappings
             // CreateTheaterDTO -> Theater
             CreateMap<CreateTheaterDTO, Theater>();
 
+            // CreateSeatDTO -> Seat
+            CreateMap<CreateSeatDTO, Seat>();
+
             // UpdateTheaterDTO -> Theater
             CreateMap<UpdateTheaterDTO, Theater>();
+
+            // UpdateSeatDTO -> Seat
+            CreateMap<UpdateSeatDTO, Seat>();
 
             // Theater -> TheaterDTO 
             CreateMap<Theater, TheaterDTO>();
