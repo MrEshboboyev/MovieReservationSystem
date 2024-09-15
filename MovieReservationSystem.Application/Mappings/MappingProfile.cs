@@ -56,6 +56,19 @@ namespace MovieReservationSystem.Application.Mappings
             // ReserveSeatDTO -> Ticket
             CreateMap<ReserveSeatDTO, Ticket>()
                 .ForMember(dest => dest.PurchaseDate, opt => opt.MapFrom(src => DateTime.UtcNow));
+
+            // Schedule -> TheaterMovieScheduleDTO
+            CreateMap<Schedule, TheaterMovieScheduleDTO>()
+                .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Movie.Title));
+
+            // CreateTheaterDTO -> Theater
+            CreateMap<CreateTheaterDTO, Theater>();
+
+            // UpdateTheaterDTO -> Theater
+            CreateMap<UpdateTheaterDTO, Theater>();
+
+            // Theater -> TheaterDTO 
+            CreateMap<Theater, TheaterDTO>();
         }
     }
 }
