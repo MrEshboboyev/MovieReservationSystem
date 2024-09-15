@@ -144,12 +144,12 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             }
         }
 
-        public async Task<MovieScheduleDTO> AddMovieScheduleAsync(Guid movieId, CreateScheduleDTO createScheduleDTO)
+        public async Task<MovieScheduleDTO> AddMovieScheduleAsync(Guid movieId, CreateMovieScheduleDTO createMovieScheduleDTO)
         {
             try
             {
                 // preparer schedule for db
-                var scheduleForDb = _mapper.Map<Schedule>(createScheduleDTO);
+                var scheduleForDb = _mapper.Map<Schedule>(createMovieScheduleDTO);
 
                 // assign MovieId
                 scheduleForDb.MovieId = movieId;

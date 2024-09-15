@@ -1,8 +1,7 @@
 ﻿namespace MovieReservationSystem.Application.DTOs
 {
-    public class CreateScheduleDTO
+    public class CreateMovieScheduleDTO
     {
-        public Guid MovieId { get; set; }
         public DateTime ShowTime { get; set; }
         public int TheaterId { get; set; }
     }

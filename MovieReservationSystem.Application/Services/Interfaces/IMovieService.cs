@@ -14,7 +14,7 @@ namespace MovieReservationSystem.Application.Services.Interfaces
         Task<IEnumerable<MovieScheduleDTO>> GetMovieSchedulesAsync(Guid movieId);
 
         // add a new schedule to a movie
-        Task<MovieScheduleDTO> AddMovieScheduleAsync(Guid movieId, CreateScheduleDTO createScheduleDTO);
+        Task<MovieScheduleDTO> AddMovieScheduleAsync(Guid movieId, CreateMovieScheduleDTO createMovieScheduleDTO);
 
         // Get all currently showing movies
         Task<IEnumerable<MovieDTO>> GetCurrentlyShowingMoviesAsync();
