@@ -90,7 +90,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             }
         }
 
-        public Task<PaymentDTO> GetPaymentDetails(Guid paymentId)
+        public async Task<PaymentDTO> GetPaymentDetails(Guid paymentId)
         {
             try
             {
