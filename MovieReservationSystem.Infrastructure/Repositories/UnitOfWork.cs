@@ -8,6 +8,7 @@ namespace MovieReservationSystem.Infrastructure.Repositories
         public IActorRepository Actor { get; private set; } = new ActorRepository(db);
         public IMovieActorRepository MovieActor { get; private set; } = new MovieActorRepository(db);
         public IMovieRepository Movie { get; private set; } = new MovieRepository(db);
+        public IPaymentRepository Payment { get; private set; } = new PaymentRepository(db);
         public IScheduleRepository Schedule { get; private set; } = new ScheduleRepository(db);
         public ISeatRepository Seat { get; private set; } = new SeatRepository(db);
         public ITheaterRepository Theater { get; private set; } = new TheaterRepository(db);

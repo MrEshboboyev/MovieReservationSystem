@@ -5,6 +5,7 @@
         IActorRepository Actor { get; }
         IMovieActorRepository MovieActor { get; }
         IMovieRepository Movie { get; }
+        IPaymentRepository Payment { get; }
         IScheduleRepository Schedule { get; }
         ISeatRepository Seat { get; }
         ITheaterRepository Theater { get; }
