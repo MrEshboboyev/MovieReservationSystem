@@ -6,10 +6,12 @@ using MovieReservationSystem.Domain.Entities;
 
 namespace MovieReservationSystem.Infrastructure.Implementations
 {
-    public class TicketService(IUnitOfWork unitOfWork, IMapper mapper) : ITicketService
+    public class TicketService(IUnitOfWork unitOfWork, IMapper mapper,
+        IPaymentService paymentService) : ITicketService
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
+        private readonly IPaymentService _paymentService = paymentService;
 
         public async Task<TicketPurchaseResponseDTO> PurchaseTicketAsync(TicketPurchaseRequestDTO ticketPurchaseRequestDTO)
         {
@@ -60,13 +62,13 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 _unitOfWork.Ticket.Add(ticketForDb);
 
                 // Handle Payment using the service
-                var processedPayment = _unitOfWork.PaymentService.CreatePaymentAsync(
+                var processedPayment = await _paymentService.CreatePaymentAsync(
                     ticketForDb.TicketId, ticketPurchaseRequestDTO.PaymentRequestDTO
                     );
 
                 // associate the payment with the ticket
-                ticketForDb.TicketId = processedPayment.TicketId;
-                ticketForDb.Payment = _mapper.Map<Ticket>(processedPayment);
+                ticketForDb.PaymentId = processedPayment.PaymentId;
+                ticketForDb.Payment = _mapper.Map<Payment>(processedPayment);
 
                 // save the updated ticket with payment
                 _unitOfWork.Ticket.Update(ticketForDb);
@@ -135,7 +137,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 if (ticketFromDb.Payment == null || ticketFromDb.Payment.Status != "Confirmed!")
                     return false; // Cannot refund unconfirmed or unpaid tickets
 
-                var isRefunded = _unitOfWork.PaymentService.RefundPaymentAsync(ticketFromDb.PaymentId);
+                var isRefunded = await _paymentService.RefundPaymentAsync(ticketFromDb.PaymentId);
                 if (isRefunded) // refund this payment
                 {
                     // update ticket payment status to "Refunded"
