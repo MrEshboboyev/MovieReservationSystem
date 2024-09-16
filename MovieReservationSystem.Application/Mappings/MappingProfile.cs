@@ -75,6 +75,9 @@ namespace MovieReservationSystem.Application.Mappings
 
             // Theater -> TheaterDTO 
             CreateMap<Theater, TheaterDTO>();
+
+            // Payment -> PaymentDTO
+            CreateMap<Payment, PaymentDTO>();
         }
     }
 }
