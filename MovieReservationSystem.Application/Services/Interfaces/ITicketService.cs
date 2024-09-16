@@ -5,7 +5,7 @@ namespace MovieReservationSystem.Application.Services.Interfaces
     public interface ITicketService
     {
         // Purchase Ticket
-        Task<TicketDTO> PurchaseTicketAsync(TicketPurchaseRequestDTO ticketPurchaseRequestDTO);
+        Task<TicketPurchaseResponseDTO> PurchaseTicketAsync(TicketPurchaseRequestDTO ticketPurchaseRequestDTO);
 
         // View Ticket Details
         Task<TicketDTO> GetTicketDetailsAsync(Guid ticketId);
