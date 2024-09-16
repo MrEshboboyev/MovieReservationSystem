@@ -10,5 +10,6 @@ namespace MovieReservationSystem.Domain.Entities
 
         // relations
         public ICollection<Ticket> Tickets { get; set; }
+        public ICollection<Payment> Payments { get; set; }
     }
 }

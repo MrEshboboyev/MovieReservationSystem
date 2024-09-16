@@ -14,5 +14,8 @@
 
         public Guid SeatId { get; set; }
         public Seat Seat { get; set; }
+
+        public Guid PaymentId { get; set; }
+        public Payment Payment { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace MovieReservationSystem.Infrastructure.Data
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieActor> MovieActors { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Theater> Theaters { get; set; }
@@ -69,6 +70,20 @@ namespace MovieReservationSystem.Infrastructure.Data
                 .HasOne(s => s.User)
                 .WithMany(t => t.Tickets)
                 .HasForeignKey(s => s.UserId);
+
+            // Many-to-One between Payment and User
+            builder.Entity<Payment>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Payments)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // One-to-One between Payment and Ticket
+            builder.Entity<Payment>()
+                .HasOne(p => p.Ticket)
+                .WithOne(t => t.Payment)
+                .HasForeignKey<Payment>(p => p.TicketId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
