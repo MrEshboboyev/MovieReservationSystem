@@ -16,7 +16,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             try
             {
                 return _mapper.Map<IEnumerable<MovieDetailsDTO>>(
-                    _unitOfWork.Movie.GetAll(includeProperties: "Schedules,MovieActors"));
+                    _unitOfWork.Movie.GetAll(includeProperties: "Schedules,MovieActors.Actor"));
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             {
                 return _mapper.Map<MovieDetailsDTO>(
                     _unitOfWork.Movie.GetAll(m => m.MovieId.Equals(movieId), 
-                    includeProperties: "Schedules,MovieActors"));
+                    includeProperties: "Schedules,MovieActors.Actor"));
             }
             catch (Exception ex)
             {
