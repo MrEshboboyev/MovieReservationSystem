@@ -39,7 +39,7 @@ namespace MovieReservationSystem.Presentation.Controllers
         }
 
         [Authorize(Roles = SD.Role_Admin)]
-        [HttpGet("create-theaters")]
+        [HttpPost("create-theaters")]
         public async Task<IActionResult> CreateTheater([FromBody] CreateTheaterDTO createTheaterDTO)
         {
             try
@@ -53,7 +53,7 @@ namespace MovieReservationSystem.Presentation.Controllers
         }
 
         [Authorize(Roles = SD.Role_Admin)]
-        [HttpGet("update-theater")]
+        [HttpPut("update-theater")]
         public async Task<IActionResult> UpdateTheater(Guid theaterId, [FromBody] UpdateTheaterDTO updateTheaterDTO)
         {
             try
@@ -66,7 +66,7 @@ namespace MovieReservationSystem.Presentation.Controllers
             }
         }
 
-        [HttpGet("remove-theater")]
+        [HttpDelete("remove-theater")]
         public async Task<IActionResult> RemoveTheater(Guid theaterId)
         {
             try

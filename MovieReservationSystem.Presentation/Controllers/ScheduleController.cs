@@ -78,7 +78,7 @@ namespace MovieReservationSystem.Presentation.Controllers
         }
 
         [Authorize(Roles = SD.Role_Admin)]
-        [HttpPut("create-schedule")]
+        [HttpPost("create-schedule")]
         public async Task<IActionResult> CreateSchedule([FromBody] CreateScheduleDTO createScheduleDTO)
         {
             try
@@ -106,7 +106,7 @@ namespace MovieReservationSystem.Presentation.Controllers
         }
 
         [Authorize(Roles = SD.Role_Admin)]
-        [HttpPut("delete-schedule")]
+        [HttpDelete("delete-schedule")]
         public async Task<IActionResult> DeleteSchedule(Guid scheduleId)
         {
             try
