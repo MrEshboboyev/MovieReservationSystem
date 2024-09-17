@@ -181,7 +181,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                         createMovieDTO.ActorIds.Contains(a.ActorId)).ToList();
 
                     // checking actorsFromDb.Count and receiving dto ids
-                    if (actorsFromDb == null || !actorsFromDb.Count().Equals(createMovieDTO.ActorIds.Count()))
+                    if (actorsFromDb == null || !actorsFromDb.Count.Equals(createMovieDTO.ActorIds.Count))
                         throw new Exception("Actor(s) not found!");
 
                     // associate actors with this movie
@@ -246,7 +246,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                         updateMovieDTO.ActorIds.Contains(a.ActorId)).ToList();
 
                     // checking actorsFromDb.Count and receiving dto ids
-                    if (actorsFromDb == null || !actorsFromDb.Count().Equals(updateMovieDTO.ActorIds.Count()))
+                    if (actorsFromDb == null || !actorsFromDb.Count.Equals(updateMovieDTO.ActorIds.Count))
                         throw new Exception("Actor(s) not found!");
 
                     // clear the current MovieActors
@@ -261,7 +261,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 }
 
                 // update movie to db and save db
-                _unitOfWork.Movie.Add(movieFromDb);
+                _unitOfWork.Movie.Update(movieFromDb);
 
                 await _unitOfWork.Save();
 
