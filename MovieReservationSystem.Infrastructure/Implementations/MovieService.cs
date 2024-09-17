@@ -233,7 +233,8 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // checking movie exist in db
                 var movieFromDb = _unitOfWork.Movie.Get(
                     filter: m => m.MovieId.Equals(movieId),
-                    includeProperties: "MovieActors"
+                    includeProperties: "MovieActors",
+                    tracked: true
                     ) ?? throw new Exception("Movie not found!");
 
                 // prepare movie for db
@@ -249,15 +250,34 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                     if (actorsFromDb == null || !actorsFromDb.Count.Equals(updateMovieDTO.ActorIds.Count))
                         throw new Exception("Actor(s) not found!");
 
-                    // clear the current MovieActors
-                    movieFromDb.MovieActors.Clear();
+                    // Current list of actor IDs already associated with the movie
+                    var currentActorIds = movieFromDb.MovieActors.Select(ma => ma.ActorId).ToList();
 
-                    // associate actors with this movie
-                    movieFromDb.MovieActors = actorsFromDb.Select(actor => new MovieActor
+                    // Find actors to add (those in DTO but not currently in MovieActors)
+                    var actorsToAdd = actorsFromDb
+                        .Where(a => !currentActorIds.Contains(a.ActorId))
+                        .Select(a => new MovieActor
+                        {
+                            ActorId = a.ActorId,
+                            MovieId = movieFromDb.MovieId
+                        }).ToList();
+
+                    // Find actors to remove (those currently in MovieActors but not in the DTO)
+                    var actorsToRemove = movieFromDb.MovieActors
+                        .Where(a => !updateMovieDTO.ActorIds.Contains(a.ActorId))
+                        .ToList();
+
+                    // Remove actors that are no longer associated
+                    foreach (var actor in actorsToRemove)
                     {
-                        ActorId = actor.ActorId,
-                        MovieId = movieFromDb.MovieId
-                    }).ToList();
+                        movieFromDb.MovieActors.Remove(actor);
+                    }
+
+                    // Add new actors to the movie
+                    foreach (var actor in actorsToAdd)
+                    {
+                        movieFromDb.MovieActors.Add(actor);
+                    }
                 }
 
                 // update movie to db and save db
