@@ -18,6 +18,7 @@ namespace MovieReservationSystem.Infrastructure.Configurations
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IActorService, ActorService>();
             services.AddScoped<IPaymentService, StripePaymentService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<ISeatReservationService, SeatReservationService>();

@@ -45,10 +45,14 @@ namespace MovieReservationSystem.Infrastructure.Implementations
         {
             try
             {
-                return _mapper.Map<IEnumerable<ActorDetailedDTO>>(_unitOfWork.MovieActor.GetAll(
-                    filter: a => a.MovieId.Equals(movieId),
-                    includeProperties: "MovieActors.Movie"
-                    ));
+                // getting this movie
+                var movieFromDb = _unitOfWork.Movie.Get(
+                    filter: m => m.MovieId.Equals(movieId),
+                    includeProperties: "MovieActors.Actor"
+                    ) ?? throw new Exception("Movie not found!");
+
+                var movieActors = movieFromDb.MovieActors.Select(ma => ma.Actor).ToList(); 
+                return _mapper.Map<IEnumerable<ActorDetailedDTO>>(movieActors);
             }
             catch (Exception ex)
             {
