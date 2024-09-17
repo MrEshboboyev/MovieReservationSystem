@@ -20,7 +20,7 @@ builder.Services.AddIdentityConfiguration();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 // configure lifetime for services
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 // configure AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
