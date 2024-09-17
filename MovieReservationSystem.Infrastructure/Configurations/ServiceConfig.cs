@@ -5,6 +5,7 @@ using MovieReservationSystem.Application.Services.Interfaces;
 using MovieReservationSystem.Application.Settings;
 using MovieReservationSystem.Infrastructure.Data;
 using MovieReservationSystem.Infrastructure.Implementations;
+using MovieReservationSystem.Infrastructure.Repositories;
 
 namespace MovieReservationSystem.Infrastructure.Configurations
 {
@@ -15,6 +16,8 @@ namespace MovieReservationSystem.Infrastructure.Configurations
             // adding lifetime
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IPaymentService, StripePaymentService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<ISeatReservationService, SeatReservationService>();
