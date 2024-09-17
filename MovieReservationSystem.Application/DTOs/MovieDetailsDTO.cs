@@ -8,7 +8,7 @@
         public TimeSpan Duration { get; set; }
 
         // relations
-        public ICollection<ActorDTO> Actors { get; set; }
+        public ICollection<ActorBasicDTO> Actors { get; set; }
         public ICollection<MovieScheduleDTO> Schedules { get; set; }
     }
 }

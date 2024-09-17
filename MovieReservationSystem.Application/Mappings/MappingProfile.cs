@@ -18,7 +18,7 @@ namespace MovieReservationSystem.Application.Mappings
                 .ForMember(dest => dest.Schedules, opt => opt.MapFrom(src => src.Schedules));
 
             // Actor -> ActorDTO
-            CreateMap<Actor, ActorDTO>();
+            CreateMap<Actor, ActorBasicDTO>();
 
             // Schedule -> MovieScheduleDTO
             CreateMap<Schedule, MovieScheduleDTO>()
