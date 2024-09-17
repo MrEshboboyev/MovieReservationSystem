@@ -1,6 +1,6 @@
 ﻿namespace MovieReservationSystem.Application.DTOs
 {
-    public class ActorDetailsDTO
+    public class ActorDetailedDTO
     {
         public Guid ActorId { get; set; }
         public string Name { get; set; }

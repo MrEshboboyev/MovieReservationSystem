@@ -96,6 +96,18 @@ namespace MovieReservationSystem.Application.Mappings
                 .ForMember(dest => dest.Price, opt => opt.Ignore())  // Price would be set later (could come from schedule, for example)
                 .ForMember(dest => dest.UserId, opt => opt.Ignore())  // This will be set from the logged-in user
                 .ForMember(dest => dest.Payment, opt => opt.Ignore());  // Payment will be set after Stripe payment confirmation
+
+
+
+            // Actor -> ActorDTO
+            CreateMap<Actor, ActorDetailedDTO>()
+                .ForMember(dest => dest.Movies, opt => opt.MapFrom(src => src.MovieActors.Select(ma => ma.Movie.Title)));
+
+            // CreateActorDTO -> Actor
+            CreateMap<CreateActorDTO, Actor>();
+
+            // UpdateActorDTO -> Actor
+            CreateMap<UpdateActorDTO, Actor>();
         }
     }
 }
