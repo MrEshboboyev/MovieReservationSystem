@@ -180,6 +180,10 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                     var actorsFromDb = _unitOfWork.Actor.GetAll(a => 
                         createMovieDTO.ActorIds.Contains(a.ActorId)).ToList();
 
+                    // checking actorsFromDb.Count and receiving dto ids
+                    if (actorsFromDb == null || !actorsFromDb.Count().Equals(createMovieDTO.ActorIds.Count()))
+                        throw new Exception("Actor(s) not found!");
+
                     // associate actors with this movie
                     movieForDb.MovieActors = actorsFromDb.Select(actor => new MovieActor
                     {
@@ -240,6 +244,10 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                     // retrieve the actors by their ids
                     var actorsFromDb = _unitOfWork.Actor.GetAll(a =>
                         updateMovieDTO.ActorIds.Contains(a.ActorId)).ToList();
+
+                    // checking actorsFromDb.Count and receiving dto ids
+                    if (actorsFromDb == null || !actorsFromDb.Count().Equals(updateMovieDTO.ActorIds.Count()))
+                        throw new Exception("Actor(s) not found!");
 
                     // clear the current MovieActors
                     movieFromDb.MovieActors.Clear();
