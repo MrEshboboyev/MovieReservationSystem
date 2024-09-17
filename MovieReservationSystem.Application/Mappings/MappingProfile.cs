@@ -38,12 +38,18 @@ namespace MovieReservationSystem.Application.Mappings
                 .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Movie.Title))
                 .ForMember(dest => dest.TheaterName, opt => opt.MapFrom(src => src.Theater.Name));
 
+            // Schedule -> ScheduleDTO
+            CreateMap<Schedule, ScheduleDTO>()
+                .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Movie.Title))
+                .ForMember(dest => dest.TheaterName, opt => opt.MapFrom(src => src.Theater.Name));
+
             // Seat -> SeatDTO
             CreateMap<Seat, SeatDTO>()
                 .ForMember(dest => dest.IsAvailable, opt => opt.Ignore());
 
             // CreateScheduleDTO -> Schedule
-            CreateMap<CreateScheduleDTO, Schedule>();
+            CreateMap<CreateScheduleDTO, Schedule>()
+                .ForMember(dest => dest.ShowTime, opt => opt.MapFrom(src => src.ShowTime.ToUniversalTime()));
 
             // Ticket -> SeatReservationDTO
             CreateMap<Ticket, SeatReservationDTO>()

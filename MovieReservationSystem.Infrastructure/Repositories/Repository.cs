@@ -54,7 +54,7 @@ namespace MovieReservationSystem.Infrastructure.Repositories
                 }
             }
 
-            return query.FirstOrDefault() ?? throw new Exception("Entity not found!");
+            return query.FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null, bool tracked = false)

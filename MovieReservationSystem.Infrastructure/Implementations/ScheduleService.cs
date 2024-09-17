@@ -112,13 +112,29 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             try
             {
                 // prepare schedule with movie and theater by ids 
+                var movieExist = _unitOfWork.Movie.Any(m => m.MovieId.Equals(createScheduleDTO.MovieId));
+                var theaterExist = _unitOfWork.Theater.Any(m => m.TheaterId.Equals(createScheduleDTO.TheaterId));
+
+                if (!theaterExist || !movieExist)
+                    throw new Exception("Theater/Movie not found!");
+
+                // checking this date is not movie in this theater
+                var existingSchedule = _unitOfWork.Schedule.Get(
+                    s => s.TheaterId.Equals(createScheduleDTO.TheaterId) &&
+                    s.ShowTime.Date.Equals(createScheduleDTO.ShowTime.ToUniversalTime().Date)
+                    );
+
+                if (existingSchedule != null)
+                    throw new Exception("A movie is already scheduled in this theater on the same day!" +
+                        $"Schedule Id : {existingSchedule.ScheduleId}");
+
+                // prepare for db
                 var scheduleForDb = _mapper.Map<Schedule>(createScheduleDTO);
                 
                 // adding schedule to db and save database
                 _unitOfWork.Schedule.Add(scheduleForDb);
 
                 await _unitOfWork.Save();
-
 
                 return _mapper.Map<ScheduleDTO>(scheduleForDb);
             }

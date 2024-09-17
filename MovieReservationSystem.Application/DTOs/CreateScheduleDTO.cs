@@ -4,6 +4,6 @@
     {
         public Guid MovieId { get; set; }
         public DateTime ShowTime { get; set; }
-        public int TheaterId { get; set; }
+        public Guid TheaterId { get; set; }
     }
 }
