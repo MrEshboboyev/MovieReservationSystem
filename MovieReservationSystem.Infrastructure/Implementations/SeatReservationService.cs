@@ -19,12 +19,14 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // get this schedule with theater seats and tickets
                 var scheduleFromDb = _unitOfWork.Schedule.Get(
                     filter: c => c.ScheduleId.Equals(scheduleId),
-                    includeProperties: "Theater.Seats,Tickets");
+                     includeProperties: "Theater.Seats,Tickets")
+                    ?? throw new Exception("Schedule not found!");
 
                 // available seats : tickets seatId is not assigned
                 var availableSeats = scheduleFromDb.Theater.Seats
                     .Where(seat => !scheduleFromDb.Tickets.Any(
-                        ticket => ticket.SeatId.Equals(seat.SeatId)));
+                        ticket => ticket.SeatId.Equals(seat.SeatId))) 
+                    ?? throw new Exception("Not available seats this schedule!") ;
 
                 return _mapper.Map<IEnumerable<SeatDTO>>(availableSeats);   
             }
@@ -42,7 +44,8 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 var ticketsFromDb = _unitOfWork.Ticket.GetAll(
                     filter: t => t.ScheduleId.Equals(scheduleId),
                     includeProperties: "Schedule.Movie, Schedule.Theater,Seat,User"
-                    );
+                    )
+                    ?? throw new Exception("Reservation(Ticket) not found!");
 
                 return _mapper.Map<IEnumerable<SeatReservationDTO>>(ticketsFromDb);
             }
@@ -60,7 +63,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 var ticketsFromDb = _unitOfWork.Ticket.GetAll(
                     filter: t => t.UserId.Equals(userId),
                     includeProperties: "Schedule.Movie, Schedule.Theater,Seat"
-                    );
+                    ) ?? throw new Exception("Reservation(Ticket) not found!");
 
                 return _mapper.Map<IEnumerable<SeatReservationDTO>>(ticketsFromDb);
             }
@@ -75,7 +78,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             try
             {
                 // get tickets and checking this schedule and seat is available
-                return !_unitOfWork.Ticket.Any(
+                return _unitOfWork.Ticket.Any(
                     t => t.ScheduleId.Equals(scheduleId) && t.SeatId.Equals(seatId)
                     );
             }
