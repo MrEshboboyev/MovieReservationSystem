@@ -9,6 +9,9 @@
         public Guid TheaterId { get; set; }
         public Theater Theater { get; set; }
 
+        // Add a base price for all tickets for this schedule
+        public decimal Price { get; set; }
+
         // relations
         public ICollection<Ticket> Tickets { get; set; }
     }
