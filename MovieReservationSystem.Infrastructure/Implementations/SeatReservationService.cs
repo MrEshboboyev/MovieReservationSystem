@@ -77,6 +77,14 @@ namespace MovieReservationSystem.Infrastructure.Implementations
         {
             try
             {
+                // checking schedule or seat is found
+                var scheduleExist = _unitOfWork.Schedule.Any(s => s.ScheduleId.Equals(scheduleId));
+                var seatExist = _unitOfWork.Seat.Any(s => s.SeatId.Equals(seatId));
+
+                // throw error
+                if (!scheduleExist || !seatExist)
+                    throw new Exception("Schedule/Seat is not found!");
+
                 // get tickets and checking this schedule and seat is available
                 return _unitOfWork.Ticket.Any(
                     t => t.ScheduleId.Equals(scheduleId) && t.SeatId.Equals(seatId)
@@ -98,9 +106,16 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 if (!isAvailable)
                     throw new Exception("The seat is already reserved!");
 
+                // getting schedule for price ticket
+                var scheduleFromDb = _unitOfWork.Schedule.Get(
+                    s => s.ScheduleId.Equals(reserveSeatDTO.ScheduleId));
+
+                // handling not found exception in IsAvailable() method;
+
                 // create a new ticket for the reservation
                 var ticketForDb = _mapper.Map<Ticket>(reserveSeatDTO);
-                
+                ticketForDb.Price = scheduleFromDb.Price;
+
                 // adding ticket to db and save database
                 _unitOfWork.Ticket.Add(ticketForDb);
 
