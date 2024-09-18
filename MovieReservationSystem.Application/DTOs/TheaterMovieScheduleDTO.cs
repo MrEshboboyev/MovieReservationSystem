@@ -5,5 +5,6 @@
         public Guid ScheduleId { get; set; }
         public string MovieTitle { get; set; }
         public DateTime ShowTime { get; set; }
+        public decimal Price { get; set; }
     }
 }

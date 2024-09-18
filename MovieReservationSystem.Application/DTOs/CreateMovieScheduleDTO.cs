@@ -4,5 +4,6 @@
     {
         public DateTime ShowTime { get; set; }
         public int TheaterId { get; set; }
+        public decimal Price { get; set; }
     }
 }
