@@ -86,7 +86,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                     throw new Exception("Schedule/Seat is not found!");
 
                 // get tickets and checking this schedule and seat is available
-                return _unitOfWork.Ticket.Any(
+                return !_unitOfWork.Ticket.Any(
                     t => t.ScheduleId.Equals(scheduleId) && t.SeatId.Equals(seatId)
                     );
             }

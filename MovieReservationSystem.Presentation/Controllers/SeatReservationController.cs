@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieReservationSystem.Application.Common.Models;
+using MovieReservationSystem.Application.DTOs;
 using MovieReservationSystem.Application.Services.Interfaces;
 using System.Security.Claims;
 
@@ -60,6 +62,27 @@ namespace MovieReservationSystem.Presentation.Controllers
             try
             {
                 return Ok(await _seatReservationService.IsSeatAvailableAsync(scheduleId, seatId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("reserve-seat")]
+        public async Task<IActionResult> ReserveSeat([FromBody] ReserveSeatModel reserveSeatModel)
+        {
+            try
+            {
+                // prepare ReserveSeatDTO
+                ReserveSeatDTO reserveSeatDTO = new()
+                {
+                    ScheduleId = reserveSeatModel.ScheduleId,
+                    SeatId = reserveSeatModel.SeatId,
+                    UserId = GetUserId()
+                };
+
+                return Ok(await _seatReservationService.ReserveSeatAsync(reserveSeatDTO));
             }
             catch (Exception ex)
             {
