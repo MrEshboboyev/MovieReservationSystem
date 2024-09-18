@@ -89,5 +89,19 @@ namespace MovieReservationSystem.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("cancel-seat-reservation")]
+        public async Task<IActionResult> CancelSeatReservation(Guid ticketId)
+        {
+            try
+            {
+                await _seatReservationService.CancelSeatReservationAsync(GetUserId(), ticketId);
+                return Ok("Cancelled successfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

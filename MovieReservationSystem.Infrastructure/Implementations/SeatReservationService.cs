@@ -129,11 +129,12 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             }
         }
 
-        public async Task CancelSeatReservationAsync(Guid reservationId)
+        public async Task CancelSeatReservationAsync(string userId, Guid reservationId)
         {
             try
             {
-                var ticketFromDb = _unitOfWork.Ticket.Get(t => t.TicketId.Equals(reservationId))
+                var ticketFromDb = _unitOfWork.Ticket.Get(t => t.TicketId.Equals(reservationId)
+                && t.UserId.Equals(userId))
                      ?? throw new Exception("Reservation not found!");
 
 
@@ -146,6 +147,6 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             {
                 throw new Exception(ex.Message);
             }
-        }
+        } 
     }
 }
