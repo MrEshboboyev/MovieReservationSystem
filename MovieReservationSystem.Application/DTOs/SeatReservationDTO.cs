@@ -2,7 +2,7 @@
 {
     public class SeatReservationDTO
     {
-        public Guid ReservationId { get; set; }
+        public Guid TicketId { get; set; }
         public string UserId { get; set; }
         public string UserName { get; set; }
         public string MovieTitle { get; set; }

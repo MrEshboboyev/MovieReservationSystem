@@ -43,7 +43,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // get tickets from db with relations
                 var ticketsFromDb = _unitOfWork.Ticket.GetAll(
                     filter: t => t.ScheduleId.Equals(scheduleId),
-                    includeProperties: "Schedule.Movie, Schedule.Theater,Seat,User"
+                    includeProperties: "Schedule.Movie, Schedule.Theater,Seat,User,Schedule"
                     )
                     ?? throw new Exception("Reservation(Ticket) not found!");
 
@@ -62,7 +62,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // get tickets from db with relations
                 var ticketsFromDb = _unitOfWork.Ticket.GetAll(
                     filter: t => t.UserId.Equals(userId),
-                    includeProperties: "Schedule.Movie, Schedule.Theater,Seat"
+                    includeProperties: "Schedule.Movie, Schedule.Theater,Seat,User,Schedule"
                     ) ?? throw new Exception("Reservation(Ticket) not found!");
 
                 return _mapper.Map<IEnumerable<SeatReservationDTO>>(ticketsFromDb);
