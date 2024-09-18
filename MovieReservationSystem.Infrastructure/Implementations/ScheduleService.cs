@@ -57,7 +57,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             try
             {
                 // get schedule with movie 
-                var scheduleFromDb = _unitOfWork.Schedule.Get(
+                var scheduleFromDb = _unitOfWork.Schedule.GetAll(
                     filter: s => s.MovieId.Equals(movieId),
                     includeProperties: "Movie,Theater"
                     );
@@ -75,7 +75,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             try
             {
                 // get schedule with theater 
-                var scheduleFromDb = _unitOfWork.Schedule.Get(
+                var scheduleFromDb = _unitOfWork.Schedule.GetAll(
                     filter: s => s.TheaterId.Equals(theaterId),
                     includeProperties: "Movie,Theater"
                     );
@@ -88,13 +88,13 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             }
         }
 
-        public async Task<IEnumerable<ScheduleDTO>> GetSchedulesInRangeAsync(DateTime starDate, DateTime endDate)
+        public async Task<IEnumerable<ScheduleDTO>> GetSchedulesInRangeAsync(DateTime startDate, DateTime endDate)
         {
             try
             {
                 // get schedule with range
-                var scheduleFromDb = _unitOfWork.Schedule.Get(
-                    filter: s => s.ShowTime >= starDate && s.ShowTime <= endDate,
+                var scheduleFromDb = _unitOfWork.Schedule.GetAll(
+                    filter: s => s.ShowTime >= startDate.ToUniversalTime() && s.ShowTime <= endDate.ToUniversalTime(),
                     includeProperties: "Movie,Theater"
                     );
 

@@ -52,11 +52,11 @@ namespace MovieReservationSystem.Presentation.Controllers
         }
 
         [HttpGet("get-schedules-in-range")]
-        public async Task<IActionResult> GetSchedulesInRange(DateTime starDate, DateTime endDate)
+        public async Task<IActionResult> GetSchedulesInRange(DateTime startDate, DateTime endDate)
         {
             try
             {
-                return Ok(await _scheduleService.GetSchedulesInRangeAsync(starDate, endDate));
+                return Ok(await _scheduleService.GetSchedulesInRangeAsync(startDate, endDate));
             }
             catch (Exception ex)
             {
