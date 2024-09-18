@@ -121,7 +121,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // checking this date is not movie in this theater
                 var existingSchedule = _unitOfWork.Schedule.Get(
                     s => s.TheaterId.Equals(createScheduleDTO.TheaterId) &&
-                    s.ShowTime.Date.Equals(createScheduleDTO.ShowTime.ToUniversalTime().Date)
+                    s.ShowTime.Equals(createScheduleDTO.ShowTime.ToUniversalTime())
                     );
 
                 if (existingSchedule != null)
@@ -129,7 +129,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                         $"Schedule Id : {existingSchedule.ScheduleId}");
 
                 // prepare for db
-                var scheduleForDb = _mapper.Map<Schedule>(createScheduleDTO);
+                var scheduleForDb = _mapper.Map<Schedule>(createScheduleDTO); 
                 
                 // adding schedule to db and save database
                 _unitOfWork.Schedule.Add(scheduleForDb);
