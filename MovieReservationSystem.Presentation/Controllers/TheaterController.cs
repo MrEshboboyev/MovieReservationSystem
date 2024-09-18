@@ -78,5 +78,61 @@ namespace MovieReservationSystem.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        // Seat Management
+        [HttpGet("get-theater-seats")]
+        public async Task<IActionResult> GetTheaterSeats(Guid theaterId)
+        {
+            try
+            {
+                return Ok(await _theaterService.GetSeatsByTheaterIdAsync(theaterId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = SD.Role_Admin)]
+        [HttpPut("add-seat-to-theater")]
+        public async Task<IActionResult> AddSeatToTheater(Guid theaterId, [FromBody] CreateSeatDTO createSeatDTO)
+        {
+            try
+            {
+                return Ok(await _theaterService.AddSeatToTheaterAsync(theaterId, createSeatDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = SD.Role_Admin)]
+        [HttpPut("update-seat-to-theater")]
+        public async Task<IActionResult> UpdateSeatToTheater(Guid theaterId, Guid seatId, [FromBody] UpdateSeatDTO updateSeatDTO)
+        {
+            try
+            {
+                return Ok(await _theaterService.UpdateSeatToTheaterAsync(theaterId, seatId, updateSeatDTO));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = SD.Role_Admin)]
+        [HttpPut("remove-seat-from-theater")]
+        public async Task<IActionResult> RemoveSeatFromTheater(Guid theaterId, Guid seatId)
+        {
+            try
+            {
+                return Ok(await _theaterService.RemoveSeatFromTheaterAsync(theaterId, seatId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

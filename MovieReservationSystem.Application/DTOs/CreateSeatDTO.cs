@@ -2,6 +2,6 @@
 {
     public class CreateSeatDTO
     {
-        public int SeatNumber { get; set; }
+        public string SeatNumber { get; set; }
     }
 }
