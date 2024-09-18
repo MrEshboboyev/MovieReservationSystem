@@ -54,7 +54,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                     ScheduleId = scheduleFromDb.ScheduleId,
                     SeatId = seatFromDb.SeatId,
                     PurchaseDate = DateTime.UtcNow,
-                    Price = (decimal)scheduleFromDb.Movie.Duration.TotalHours * 10m,
+                    Price = scheduleFromDb.Price,
                     UserId = ticketPurchaseRequestDTO.PaymentRequestDTO.UserId
                 };
 
@@ -72,6 +72,8 @@ namespace MovieReservationSystem.Infrastructure.Implementations
 
                 // save the updated ticket with payment
                 _unitOfWork.Ticket.Update(ticketForDb);
+
+                await _unitOfWork.Save();
 
                 // return the response dto
                 return new TicketPurchaseResponseDTO()
