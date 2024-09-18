@@ -153,6 +153,15 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                     s.ScheduleId.Equals(scheduleId)) 
                     ?? throw new Exception("Schedule not found!");
 
+                // checking showtime in this theater is available (with updating showtime)
+                var existingSchedule = _unitOfWork.Schedule.Get(
+                    filter: s => s.TheaterId.Equals(scheduleFromDb.TheaterId) &&
+                    s.ShowTime.Equals(updateScheduleDTO.ShowTime.ToUniversalTime())
+                    );
+
+                if (existingSchedule != null)
+                    throw new Exception("A movie is already scheduled in this theater on the same day!" +
+                        $"Schedule Id : {existingSchedule.ScheduleId}");
 
                 // prepare update schedule with showtime and theater id (movieId is const)
                 _mapper.Map(updateScheduleDTO, scheduleFromDb);

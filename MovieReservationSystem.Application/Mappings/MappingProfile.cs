@@ -50,6 +50,10 @@ namespace MovieReservationSystem.Application.Mappings
             // CreateScheduleDTO -> Schedule
             CreateMap<CreateScheduleDTO, Schedule>()
                 .ForMember(dest => dest.ShowTime, opt => opt.MapFrom(src => src.ShowTime.ToUniversalTime()));
+            
+            // UpdateScheduleDTO -> Schedule
+            CreateMap<UpdateScheduleDTO, Schedule>()
+                .ForMember(dest => dest.ShowTime, opt => opt.MapFrom(src => src.ShowTime.ToUniversalTime()));
 
             // Ticket -> SeatReservationDTO
             CreateMap<Ticket, SeatReservationDTO>()
