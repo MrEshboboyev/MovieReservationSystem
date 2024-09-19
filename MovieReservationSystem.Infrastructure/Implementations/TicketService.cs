@@ -3,6 +3,7 @@ using MovieReservationSystem.Application.Common.Interfaces;
 using MovieReservationSystem.Application.DTOs;
 using MovieReservationSystem.Application.Services.Interfaces;
 using MovieReservationSystem.Domain.Entities;
+using MovieReservationSystem.Domain.Enums;
 
 namespace MovieReservationSystem.Infrastructure.Implementations
 {
@@ -69,6 +70,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // associate the payment with the ticket
                 ticketForDb.PaymentId = processedPayment.PaymentId;
                 ticketForDb.Payment = _mapper.Map<Payment>(processedPayment);
+                ticketForDb.Status = TicketStatus.Purchased;
 
                 // save the updated ticket with payment
                 _unitOfWork.Ticket.Update(ticketForDb);

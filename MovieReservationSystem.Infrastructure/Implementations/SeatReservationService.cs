@@ -3,6 +3,7 @@ using MovieReservationSystem.Application.Common.Interfaces;
 using MovieReservationSystem.Application.DTOs;
 using MovieReservationSystem.Application.Services.Interfaces;
 using MovieReservationSystem.Domain.Entities;
+using MovieReservationSystem.Domain.Enums;
 
 namespace MovieReservationSystem.Infrastructure.Implementations
 {
@@ -115,6 +116,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // create a new ticket for the reservation
                 var ticketForDb = _mapper.Map<Ticket>(reserveSeatDTO);
                 ticketForDb.Price = scheduleFromDb.Price;
+                ticketForDb.Status = TicketStatus.Reserved;
 
                 // adding ticket to db and save database
                 _unitOfWork.Ticket.Add(ticketForDb);
