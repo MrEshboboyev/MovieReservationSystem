@@ -1,10 +1,13 @@
-﻿namespace MovieReservationSystem.Domain.Entities
+﻿using MovieReservationSystem.Domain.Enums;
+
+namespace MovieReservationSystem.Domain.Entities
 {
     public class Ticket
     {
         public Guid TicketId { get; set; }
         public DateTime PurchaseDate { get; set; }
         public decimal Price { get; set; }
+        public TicketStatus Status { get; set; }
 
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
