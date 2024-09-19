@@ -28,8 +28,7 @@ namespace MovieReservationSystem.Presentation.Controllers
                 // prepare ticketPurchaseRequestDTO
                 TicketPurchaseRequestDTO ticketPurchaseRequestDTO = new()
                 {
-                    ScheduleId = ticketPurchaseRequestModel.ScheduleId,
-                    SeatNumber = ticketPurchaseRequestModel.SeatNumber,
+                    TicketId = ticketPurchaseRequestModel.TicketId,
                     PaymentRequestDTO = new()
                     {
                         UserId = GetUserId(),

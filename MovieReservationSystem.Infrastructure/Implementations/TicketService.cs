@@ -18,62 +18,44 @@ namespace MovieReservationSystem.Infrastructure.Implementations
         {
             try
             {
-                // get the schedule 
-                var scheduleFromDb = _unitOfWork.Schedule.Get(
-                    filter: s => s.ScheduleId.Equals(ticketPurchaseRequestDTO.ScheduleId)
+                // get the ticket (by seat number && schedule.theaterId)
+                var ticketFromDb = _unitOfWork.Ticket.Get(
+                    filter: s => s.TicketId.Equals(ticketPurchaseRequestDTO.TicketId)
                     );
 
-                if (scheduleFromDb == null)
+                // if seat is null or seat Tickets schedule is not find, return false
+                if (ticketFromDb == null)
                 {
                     return new TicketPurchaseResponseDTO()
                     {
-                        Message = "Schedule not found!",
+                        Message = "Ticket is not found!",
                         Success = false
                     };
                 }
 
-                // get the seat (by seat number && schedule.theaterId)
-                var seatFromDb = _unitOfWork.Seat.Get(
-                    filter: s => s.TheaterId.Equals(scheduleFromDb.TheaterId) &&
-                    s.SeatNumber.Equals(ticketPurchaseRequestDTO.SeatNumber),
-                    includeProperties: "Tickets"
-                    );
 
-                // if seat is null or seat Tickets schedule is not find, return false
-                if (seatFromDb == null || seatFromDb.Tickets.Any(
-                    s => s.ScheduleId.Equals(ticketPurchaseRequestDTO.ScheduleId))
-                    )
+                // checking status is purchased
+                if (ticketFromDb.Status.Equals(TicketStatus.Purchased))
+                {
                     return new TicketPurchaseResponseDTO()
                     {
-                        Message = "Seat is not available",
+                        Message = "The ticket is already paid.",
                         Success = false
                     };
-
-                // prepare ticket for db
-                Ticket ticketForDb = new()
-                {
-                    ScheduleId = scheduleFromDb.ScheduleId,
-                    SeatId = seatFromDb.SeatId,
-                    PurchaseDate = DateTime.UtcNow,
-                    Price = scheduleFromDb.Price,
-                    UserId = ticketPurchaseRequestDTO.PaymentRequestDTO.UserId
-                };
-
-                // Add the payment to the db (without payment at this stage)
-                _unitOfWork.Ticket.Add(ticketForDb);
+                }
 
                 // Handle Payment using the service
                 var processedPayment = await _paymentService.CreatePaymentAsync(
-                    ticketForDb.TicketId, ticketPurchaseRequestDTO.PaymentRequestDTO
+                    ticketFromDb.TicketId, ticketPurchaseRequestDTO.PaymentRequestDTO
                     );
 
                 // associate the payment with the ticket
-                ticketForDb.PaymentId = processedPayment.PaymentId;
-                ticketForDb.Payment = _mapper.Map<Payment>(processedPayment);
-                ticketForDb.Status = TicketStatus.Purchased;
+                ticketFromDb.PaymentId = processedPayment.PaymentId;
+                ticketFromDb.Payment = _mapper.Map<Payment>(processedPayment);
+                ticketFromDb.Status = TicketStatus.Purchased;
 
                 // save the updated ticket with payment
-                _unitOfWork.Ticket.Update(ticketForDb);
+                _unitOfWork.Ticket.Update(ticketFromDb);
 
                 await _unitOfWork.Save();
 
@@ -81,7 +63,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 return new TicketPurchaseResponseDTO()
                 {
                     Success = true,
-                    Ticket = _mapper.Map<TicketDTO>(ticketForDb),
+                    Ticket = _mapper.Map<TicketDTO>(ticketFromDb),
                     Payment = processedPayment,
                     Message = "Ticket purchased successfully!"
                 };

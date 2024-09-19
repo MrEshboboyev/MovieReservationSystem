@@ -2,7 +2,6 @@
 {
     public class TicketPurchaseRequestModel
     {
-        public Guid ScheduleId { get; set; }
-        public string SeatNumber { get; set; }
+        public Guid TicketId { get; set; }
     }
 }

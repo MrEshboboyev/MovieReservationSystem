@@ -95,19 +95,11 @@ namespace MovieReservationSystem.Application.Mappings
                 .ForMember(dest => dest.MovieTitle, opt => opt.MapFrom(src => src.Schedule.Movie.Title))
                 .ForMember(dest => dest.ShowTime, opt => opt.MapFrom(src => src.Schedule.ShowTime))
                 .ForMember(dest => dest.TheaterName, opt => opt.MapFrom(src => src.Schedule.Theater.Name))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Payment.Status));
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
-            // TicketPurchaseRequestDTO -> Ticket 
-            CreateMap<TicketPurchaseRequestDTO, Ticket>()
-                .ForMember(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.ScheduleId))
-                // Seat mapping logic will be handled in the service or repository layer, not directly in AutoMapper
-                .ForMember(dest => dest.SeatId, opt => opt.Ignore())  // Seat mapping will happen in the service
-                .ForMember(dest => dest.PurchaseDate, opt => opt.MapFrom(src => DateTime.UtcNow))  // Set purchase date to current date
-                .ForMember(dest => dest.Price, opt => opt.Ignore())  // Price would be set later (could come from schedule, for example)
-                .ForMember(dest => dest.UserId, opt => opt.Ignore())  // This will be set from the logged-in user
-                .ForMember(dest => dest.Payment, opt => opt.Ignore());  // Payment will be set after Stripe payment confirmation
-
-
+            //// TicketPurchaseRequestDTO -> Ticket 
+            //CreateMap<TicketPurchaseRequestDTO, Ticket>()
+            //    .ForMember(dest => dest.PurchaseDate, opt => opt.MapFrom(src => DateTime.UtcNow));  // Set purchase date to current date
 
             // Actor -> ActorDTO
             CreateMap<Actor, ActorDetailedDTO>()
