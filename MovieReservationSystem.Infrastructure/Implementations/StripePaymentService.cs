@@ -24,7 +24,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
             StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
         }
 
-        public async Task<PaymentDTO> CreatePaymentAsync(Guid ticketId, PaymentRequestDTO paymentRequestDTO)
+        public async Task<Payment> CreatePaymentAsync(Guid ticketId, PaymentRequestDTO paymentRequestDTO)
         {
             try
             {
@@ -73,8 +73,8 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                         _unitOfWork.Payment.Add(paymentForDb);
                         await _unitOfWork.Save();
 
-                        // mapping and return
-                        return _mapper.Map<PaymentDTO>(paymentForDb);
+                        //  return
+                        return paymentForDb;
                     }
 
                     throw new Exception("Payment failed!");

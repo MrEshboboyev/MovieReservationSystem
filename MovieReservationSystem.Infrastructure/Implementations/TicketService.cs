@@ -64,7 +64,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 {
                     Success = true,
                     Ticket = _mapper.Map<TicketDTO>(ticketFromDb),
-                    Payment = processedPayment,
+                    Payment = _mapper.Map<PaymentDTO>(processedPayment),
                     Message = "Ticket purchased successfully!"
                 };
             }

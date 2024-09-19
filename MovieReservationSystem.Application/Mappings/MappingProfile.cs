@@ -89,6 +89,9 @@ namespace MovieReservationSystem.Application.Mappings
             // Payment -> PaymentDTO
             CreateMap<Payment, PaymentDTO>();
 
+            // PaymentDTO -> Payment
+            CreateMap<PaymentDTO, Payment>();
+
             // Ticket -> TicketDTO
             CreateMap<Ticket, TicketDTO>()
                 .ForMember(dest => dest.SeatNumber, opt => opt.MapFrom(src => src.Seat.SeatNumber))
