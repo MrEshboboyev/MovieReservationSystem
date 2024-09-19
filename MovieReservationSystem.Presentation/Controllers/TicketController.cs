@@ -44,5 +44,44 @@ namespace MovieReservationSystem.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("get-ticket-details")]
+        public async Task<IActionResult> GetTicketDetails(Guid ticketId)
+        {
+            try
+            {
+                return Ok(await _ticketService.GetTicketDetailsAsync(ticketId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("get-user-tickets")]
+        public async Task<IActionResult> GetUserTickets()
+        {
+            try
+            {
+                return Ok(await _ticketService.GetUserTicketsAsync(GetUserId()));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpGet("request-refund")]
+        public async Task<IActionResult> RequestRefund(Guid ticketId)
+        {
+            try
+            {
+                return Ok(await _ticketService.RequestRefundAsync(ticketId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
