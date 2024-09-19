@@ -32,7 +32,7 @@ namespace MovieReservationSystem.Presentation.Controllers
                     PaymentRequestDTO = new()
                     {
                         UserId = GetUserId(),
-                        StripeToken = ""
+                        StripeToken = ticketPurchaseRequestModel.StripeToken
                     }
                 };
 

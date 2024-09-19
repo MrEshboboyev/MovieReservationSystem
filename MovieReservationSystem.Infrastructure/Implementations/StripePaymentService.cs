@@ -31,7 +31,7 @@ namespace MovieReservationSystem.Infrastructure.Implementations
                 // get ticket with relations
                 var ticketFromDb = _unitOfWork.Ticket.Get(
                     filter: t => t.TicketId.Equals(ticketId),
-                    includeProperties: "Schedule.Movie, Seats"
+                    includeProperties: "Schedule.Movie,Seat"
                     ) ?? throw new Exception("Ticket not found!");
 
                 // prepare payment amount
